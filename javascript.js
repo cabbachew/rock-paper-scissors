@@ -21,45 +21,65 @@ function playerPlay() {
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerPlay();
     computerSelection = computerPlay();
+    let pointGoesTo;
 
-    let playerScore = 0;
-    let computerScore = 0;
     if (playerSelection === computerSelection) {
+        pointGoesTo = 
         console.log("It's a tie!");
     } else if (playerSelection === 'Rock') {
         switch (computerSelection) {
             case 'Paper':
-                computerScore++;
+                pointGoesTo = "computer";
                 console.log("You lose! Paper beats Rock.");
                 break;
             case 'Scissors':
-                playerScore++;
+                pointGoesTo = "player";
                 console.log("You win! Rock beats Scissors.");
                 break;
         }
     } else if (playerSelection === 'Paper') {
         switch (computerSelection) {
             case 'Rock':
-                playerScore++;
+                pointGoesTo = "player";
                 console.log("You win! Paper beats Rock.");
                 break;
             case 'Scissors':
-                computerScore++;
+                pointGoesTo = "computer";
                 console.log("You lose! Scissors beat Paper.");
                 break;
         }
     } else if (playerSelection === 'Scissors') {
         switch (computerSelection) {
             case 'Rock':
-                computerScore++;
+                pointGoesTo = "computer";
                 console.log("You lose! Rock beats Scissors.");
                 break;
             case 'Paper':
-                playerScore++;
+                pointGoesTo = "player";
                 console.log("You win! Scissors beat Paper.");
                 break;
         }
     }
-    return "<Player Score :" + playerScore + "> < Computer Score: " + computerScore + ">";
+    return pointGoesTo;
 }
 
+function game() {
+    const scores = {
+        "player": 0,
+        "computer": 0
+    }
+    for (let i = 0; i < 5; i++) {
+        let roundWonBy = playRound();
+        if (roundWonBy === "player") {
+            scores.player++;
+        } else if (roundWonBy === "computer") {
+            scores.computer++;
+        }
+        console.log("**SCORE** <Player: " + scores.player + "> <Computer: " + scores.computer + ">");
+    }
+    if (scores.player > scores.computer){
+        console.log("You win!");
+    } else {
+        console.log("The computer wins!");
+    }
+}
