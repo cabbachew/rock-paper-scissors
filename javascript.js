@@ -1,64 +1,67 @@
-const moves = ['Rock', 'Paper', 'Scissors'];
+const MOVES = ['rock', 'paper', 'scissors'];
 
 function computerMove() {
-    return randomElement(moves);
+    return randomElement(MOVES);
 }
 
 function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-function playerPlay() {
-    // Prompt user for move  
+function playerMove() {
+    // Prompt user for move
     let playerInput = prompt("What's your move?");
     let playerSelection = playerInput.toLowerCase();
-    playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1);
     // Restrict user to valid moves
-    while (playerSelection !== 'Rock' && playerSelection !== 'Paper' && playerSelection !== 'Scissors') {
+    while (!MOVES.includes(playerSelection)) {
         playerInput = prompt("Your move must be Rock, Paper, or Scissors");
         playerSelection = playerInput.toLowerCase();
-        playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1);
     }   
     return playerSelection;
 }
 
+// function capitalize(string) {
+//     let tempString = string.toLowerCase();
+//     return tempString[0].toUpperCase() + tempString.slice(1);
+// }
+
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerPlay();
+    playerSelection = playerMovee();
     computerSelection = computerMove();
     let pointGoesTo;
 
     if (playerSelection === computerSelection) {
         pointGoesTo = 
         console.log("It's a tie!");
-    } else if (playerSelection === 'Rock') {
+    } else if (playerSelection === 'rock') {
         switch (computerSelection) {
-            case 'Paper':
+            case 'paper':
                 pointGoesTo = "computer";
                 console.log("You lose! Paper beats Rock.");
                 break;
-            case 'Scissors':
+            case 'scissors':
                 pointGoesTo = "player";
                 console.log("You win! Rock beats Scissors.");
                 break;
         }
-    } else if (playerSelection === 'Paper') {
+    } else if (playerSelection === 'paper') {
         switch (computerSelection) {
-            case 'Rock':
+            case 'rock':
                 pointGoesTo = "player";
                 console.log("You win! Paper beats Rock.");
                 break;
-            case 'Scissors':
+            case 'scissors':
                 pointGoesTo = "computer";
                 console.log("You lose! Scissors beat Paper.");
                 break;
         }
-    } else if (playerSelection === 'Scissors') {
+    } else if (playerSelection === 'scissors') {
         switch (computerSelection) {
-            case 'Rock':
+            case 'rock':
                 pointGoesTo = "computer";
                 console.log("You lose! Rock beats Scissors.");
                 break;
-            case 'Paper':
+            case 'paper':
                 pointGoesTo = "player";
                 console.log("You win! Scissors beat Paper.");
                 break;
