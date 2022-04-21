@@ -1,4 +1,4 @@
-const MOVES = ['rock', 'paper', 'scissors'];
+const MOVES = ["rock", "paper", "scissors"];
 
 function computerMove() {
     return randomElement(MOVES);
@@ -25,49 +25,77 @@ function playerMove() {
 //     return tempString[0].toUpperCase() + tempString.slice(1);
 // }
 
-function playRound(playerSelection, computerSelection) {
-    playerSelection = playerMovee();
-    computerSelection = computerMove();
-    let pointGoesTo;
-
-    if (playerSelection === computerSelection) {
-        pointGoesTo = 
-        console.log("It's a tie!");
-    } else if (playerSelection === 'rock') {
-        switch (computerSelection) {
-            case 'paper':
-                pointGoesTo = "computer";
-                console.log("You lose! Paper beats Rock.");
-                break;
-            case 'scissors':
-                pointGoesTo = "player";
-                console.log("You win! Rock beats Scissors.");
-                break;
-        }
-    } else if (playerSelection === 'paper') {
-        switch (computerSelection) {
-            case 'rock':
-                pointGoesTo = "player";
-                console.log("You win! Paper beats Rock.");
-                break;
-            case 'scissors':
-                pointGoesTo = "computer";
-                console.log("You lose! Scissors beat Paper.");
-                break;
-        }
-    } else if (playerSelection === 'scissors') {
-        switch (computerSelection) {
-            case 'rock':
-                pointGoesTo = "computer";
-                console.log("You lose! Rock beats Scissors.");
-                break;
-            case 'paper':
-                pointGoesTo = "player";
-                console.log("You win! Scissors beat Paper.");
-                break;
-        }
+function roundResult(moveOne, moveTwo) {
+    if (moveOne === moveTwo) {
+        return "tie";
     }
-    return pointGoesTo;
+    if ((moveOne === "rock" && moveTwo === "scissors") ||
+        (moveOne === "paper" && moveTwo === "rock") ||
+        (moveOne === "scissors" && moveTwo === "paper")) {
+        return "player";
+    }
+    return "computer";
+}
+
+function playRound() {
+    const playerSelection = playerMove();
+    const computerSelection = computerMove();
+    const result = roundResult(playerSelection, computerSelection);
+
+    switch (result) {
+        case "tie":
+            console.log("It's a tie!");
+            break;
+        case "player":
+            console.log(`You win! ${playerSelection} beats ${computerSelection}.`);
+            break;
+        case "computer":
+            console.log(`You lose! ${computerSelection} beats ${playerSelection}.`);
+            break;
+    }
+
+    return result;
+
+    // let pointGoesTo;
+
+    // if (playerSelection === computerSelection) {
+    //     pointGoesTo = 
+    //     console.log("It's a tie!");
+    // } else if (playerSelection === 'rock') {
+    //     switch (computerSelection) {
+    //         case 'paper':
+    //             pointGoesTo = "computer";
+    //             console.log("You lose! Paper beats Rock.");
+    //             break;
+    //         case 'scissors':
+    //             pointGoesTo = "player";
+    //             console.log("You win! Rock beats Scissors.");
+    //             break;
+    //     }
+    // } else if (playerSelection === 'paper') {
+    //     switch (computerSelection) {
+    //         case 'rock':
+    //             pointGoesTo = "player";
+    //             console.log("You win! Paper beats Rock.");
+    //             break;
+    //         case 'scissors':
+    //             pointGoesTo = "computer";
+    //             console.log("You lose! Scissors beat Paper.");
+    //             break;
+    //     }
+    // } else if (playerSelection === 'scissors') {
+    //     switch (computerSelection) {
+    //         case 'rock':
+    //             pointGoesTo = "computer";
+    //             console.log("You lose! Rock beats Scissors.");
+    //             break;
+    //         case 'paper':
+    //             pointGoesTo = "player";
+    //             console.log("You win! Scissors beat Paper.");
+    //             break;
+    //     }
+    // }
+    // return pointGoesTo;
 }
 
 function game() {
