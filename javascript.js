@@ -5,20 +5,21 @@ function game() {
         "player": 0,
         "computer": 0
     }
-    for (let i = 0; i < 5; i++) {
+    while (scores.player < 3 && scores.computer < 3) {
         let roundWonBy = playRound();
         if (roundWonBy === "player") {
             scores.player++;
         } else if (roundWonBy === "computer") {
             scores.computer++;
         }
-        console.log("**SCORE** <Player: " + scores.player + "> <Computer: " + scores.computer + ">");
+        console.log("**CURRENT SCORE** <Player: " + scores.player + "> <Computer: " + scores.computer + ">");
     }
     if (scores.player > scores.computer){
         console.log("You win!");
     } else {
         console.log("The computer wins!");
     }
+    console.log("**FINAL SCORE** <Player: " + scores.player + "> <Computer: " + scores.computer + ">");
 }
 
 function playRound() {
@@ -40,7 +41,7 @@ function playerMove() {
     let playerSelection = playerInput.toLowerCase();
     // Restrict user to valid moves
     while (!MOVES.includes(playerSelection)) {
-        playerInput = prompt("Your move must be Rock, Paper, or Scissors");
+        playerInput = prompt("Your move must be rock, paper, or scissors");
         playerSelection = playerInput.toLowerCase();
     }   
     return playerSelection;
