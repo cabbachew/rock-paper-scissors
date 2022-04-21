@@ -1,7 +1,11 @@
-function computerPlay() {
-    const moves = ['Rock', 'Paper', 'Scissors'];
-    let computerSelection =  moves[Math.floor(Math.random() * moves.length)];
-    return computerSelection;
+const moves = ['Rock', 'Paper', 'Scissors'];
+
+function computerMove() {
+    return randomElement(moves);
+}
+
+function randomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
 }
 
 function playerPlay() {
@@ -20,7 +24,7 @@ function playerPlay() {
 
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerPlay();
-    computerSelection = computerPlay();
+    computerSelection = computerMove();
     let pointGoesTo;
 
     if (playerSelection === computerSelection) {
