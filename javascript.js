@@ -1,5 +1,6 @@
 const MOVES = ["rock", "paper", "scissors"];
 
+// Revisit for refactoring
 function game() {
     const scores = {
         "player": 0,
