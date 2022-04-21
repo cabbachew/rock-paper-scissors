@@ -6,12 +6,13 @@ function game() {
         "computer": 0
     }
     while (scores.player < 3 && scores.computer < 3) {
-        let roundWonBy = playRound();
-        if (roundWonBy === "player") {
+        let round = playRound();
+        if (round.result === "player") {
             scores.player++;
-        } else if (roundWonBy === "computer") {
+        } else if (round.result === "computer") {
             scores.computer++;
         }
+        logResult(round);
         console.log("**CURRENT SCORE** <Player: " + scores.player + "> <Computer: " + scores.computer + ">");
     }
     if (scores.player > scores.computer){
@@ -23,12 +24,12 @@ function game() {
 }
 
 function playRound() {
-    const playerSelection = playerMove();
-    const computerSelection = computerMove();
-    const result = roundResult(playerSelection, computerSelection);
-    // Smelly
-    logResult(playerSelection, computerSelection, result);
-    return result;
+    const round = {
+        playerMove: playerMove(),
+        computerMove: computerMove()
+    }
+    round["result"] = roundResult(round.playerMove, round.computerMove);
+    return round;
 }
 
 function computerMove() {
@@ -37,12 +38,10 @@ function computerMove() {
 
 function playerMove() {
     // Prompt user for move
-    let playerInput = prompt("What's your move?");
-    let playerSelection = playerInput.toLowerCase();
+    let playerSelection = prompt("What's your move?").toLowerCase();
     // Restrict user to valid moves
     while (!MOVES.includes(playerSelection)) {
-        playerInput = prompt("Your move must be rock, paper, or scissors");
-        playerSelection = playerInput.toLowerCase();
+        playerSelection = prompt("Your move must be rock, paper, or scissors").toLowerCase();
     }   
     return playerSelection;
 }
@@ -59,16 +58,16 @@ function roundResult(playerMove, computerMove) {
     return "computer";
 }
 
-function logResult(playerSelection, computerSelection, result) {
+function logResult({ playerMove, computerMove, result }) {
     switch (result) {
         case "tie":
             console.log("It's a tie!");
             break;
         case "player":
-            console.log(`You win! ${capitalize(playerSelection)} beats ${computerSelection}.`);
+            console.log(`You win! ${capitalize(playerMove)} beats ${computerMove}.`);
             break;
         case "computer":
-            console.log(`You lose! ${capitalize(computerSelection)} beats ${playerSelection}.`);
+            console.log(`You lose! ${capitalize(computerMove)} beats ${playerMove}.`);
             break;
     }
 }
