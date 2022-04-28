@@ -4,9 +4,9 @@ const MOVES = ["rock", "paper", "scissors"];
 function game() {
     const scores = {
         "player": 0,
-        "computer": 0
+        "computer": 0,
     }
-    while (scores.player < 3 && scores.computer < 3) {
+    while (gameNotOver(scores)) {
         let round = playRound();
         if (round.result === "player") {
             scores.player++;
@@ -14,15 +14,12 @@ function game() {
             scores.computer++;
         }
         logResult(round);
-        console.log("**CURRENT SCORE** <Player: " + scores.player + "> <Computer: " + scores.computer + ">");
+        declareScore(scores);
     }
-    if (scores.player > scores.computer){
-        console.log("You win!");
-    } else {
-        console.log("The computer wins!");
-    }
-    console.log("**FINAL SCORE** <Player: " + scores.player + "> <Computer: " + scores.computer + ">");
+    declareWinner(scores);
+    declareFinalScore(scores);
 }
+
 
 function playRound() {
     const round = {
@@ -33,19 +30,6 @@ function playRound() {
     return round;
 }
 
-function computerMove() {
-    return randomElement(MOVES);
-}
-
-function playerMove() {
-    // Prompt user for move
-    let playerSelection = prompt("What's your move?").toLowerCase();
-    // Restrict user to valid moves
-    while (!MOVES.includes(playerSelection)) {
-        playerSelection = prompt("Your move must be rock, paper, or scissors").toLowerCase();
-    }   
-    return playerSelection;
-}
 
 function roundResult(playerMove, computerMove) {
     if (playerMove === computerMove) {
@@ -73,6 +57,20 @@ function logResult({ playerMove, computerMove, result }) {
     }
 }
 
+function computerMove() {
+    return randomElement(MOVES);
+}
+
+function playerMove() {
+    // Prompt user for move
+    let playerSelection = prompt("What's your move?").toLowerCase();
+    // Restrict user to valid moves
+    while (!MOVES.includes(playerSelection)) {
+        playerSelection = prompt("Your move must be rock, paper, or scissors").toLowerCase();
+    }   
+    return playerSelection;
+}
+
 // Helpers
 function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
@@ -81,4 +79,25 @@ function randomElement(array) {
 function capitalize(string) {
     let tempString = string.toLowerCase();
     return tempString[0].toUpperCase() + tempString.slice(1);
+}
+
+function gameNotOver(scores) {
+    return (scores.player < 3 && scores.computer < 3);
+}
+
+function declareScore(scores, final = false) {
+    const scoreType = final ? "FINAL" : "CURRENT";
+    console.log(`**${scoreType} SCORE** <Player: ${scores.player}> <Computer: ${scores.computer}>`);
+}
+
+function declareWinner(scores) {
+    if (scores.player > scores.computer) {
+        console.log("You win!");
+    } else {
+        console.log("The computer wins!");
+    }
+}
+
+function declareFinalScore(scores) {
+    declareScore(scores, true);
 }
