@@ -1,37 +1,27 @@
 const MOVES = ["rock", "paper", "scissors"];
 
-// Revisit for refactoring
 function game() {
     const scores = {
         "player": 0,
         "computer": 0,
     }
     while (gameNotOver(scores)) {
-        let round = playRound();
-        if (round.result === "player") {
-            scores.player++;
-        } else if (round.result === "computer") {
-            scores.computer++;
-        }
-        logResult(round);
-        declareScore(scores);
+        runRound(scores);
     }
-    declareWinner(scores);
+    declareGameWinner(scores);
     declareFinalScore(scores);
 }
 
-
-function playRound() {
-    const round = {
-        playerMove: playerMove(),
-        computerMove: computerMove()
-    }
-    round["result"] = roundResult(round.playerMove, round.computerMove);
-    return round;
+function runRound(scores) {
+    let computerMove = getComputerMove();
+    let playerMove = getPlayerMove();
+    let roundResult = getRoundResult(computerMove, playerMove);
+    updateScore(scores, roundResult);
+    declareRoundWinner({ playerMove, computerMove, roundResult });
+    declareScore(scores)
 }
 
-
-function roundResult(playerMove, computerMove) {
+function getRoundResult(playerMove, computerMove) {
     if (playerMove === computerMove) {
         return "tie";
     }
@@ -43,8 +33,16 @@ function roundResult(playerMove, computerMove) {
     return "computer";
 }
 
-function logResult({ playerMove, computerMove, result }) {
-    switch (result) {
+function updateScore(scores, roundResult) {
+    if (roundResult === "player") {
+        scores.player++;
+    } else if (roundResult === "computer") {
+        scores.computer++;
+    }
+}
+
+function declareRoundWinner({ playerMove, computerMove, roundResult }) {
+    switch (roundResult) {
         case "tie":
             console.log("It's a tie!");
             break;
@@ -57,11 +55,11 @@ function logResult({ playerMove, computerMove, result }) {
     }
 }
 
-function computerMove() {
+function getComputerMove() {
     return randomElement(MOVES);
 }
 
-function playerMove() {
+function getPlayerMove() {
     // Prompt user for move
     let playerSelection = prompt("What's your move?").toLowerCase();
     // Restrict user to valid moves
@@ -90,7 +88,7 @@ function declareScore(scores, final = false) {
     console.log(`**${scoreType} SCORE** <Player: ${scores.player}> <Computer: ${scores.computer}>`);
 }
 
-function declareWinner(scores) {
+function declareGameWinner(scores) {
     if (scores.player > scores.computer) {
         console.log("You win!");
     } else {
