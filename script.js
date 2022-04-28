@@ -1,9 +1,14 @@
 class Game {
-    constructor() {
+    constructor(bestOf = 5) {
         this.scores = {
             "player": 0,
             "computer": 0,
-        }
+        };
+        this.bestOf = bestOf;
+    }
+
+    get winningScore() {
+        return Math.ceil(this.bestOf / 2);
     }
 
     play() {
@@ -11,11 +16,11 @@ class Game {
             this.runRound();
         }
         this.declareGameWinner();
-        this.declareScore();
     }
 
     gameNotOver() {
-        return (this.scores.player < 3 && this.scores.computer < 3);
+        return (this.scores.player < this.winningScore &&
+                this.scores.computer < this.winningScore);
     }
     
     runRound() {
@@ -40,9 +45,9 @@ class Game {
     
     declareGameWinner() {
         if (this.scores.player > this.scores.computer) {
-            console.log("You win!");
+            console.log("You win the game!");
         } else {
-            console.log("The computer wins!");
+            console.log("The computer wins the game!");
         }
     }   
 }
