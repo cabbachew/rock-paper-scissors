@@ -4,7 +4,6 @@ class Game {
             "player": 0,
             "computer": 0,
         }
-        this.MOVES = ["rock", "paper", "scissors"];
     }
 
     play() {
@@ -20,38 +19,10 @@ class Game {
     }
     
     runRound() {
-        let computerMove = this.getComputerMove();
-        let playerMove = this.getPlayerMove();
-        let roundResult = this.getRoundResult(computerMove, playerMove);
-        this.updateScore(roundResult);
-        this.declareRoundWinner({ playerMove, computerMove, roundResult });
+        const round = new Round;
+        this.updateScore(round.result);
+        round.declareWinner();
         this.declareScore();
-    }
-
-    getComputerMove() {
-        return randomElement(this.MOVES);
-    }
-    
-    getPlayerMove() {
-        // Prompt user for move
-        let playerSelection = prompt("What's your move?").toLowerCase();
-        // Restrict user to valid moves
-        while (!this.MOVES.includes(playerSelection)) {
-            playerSelection = prompt("Your move must be rock, paper, or scissors").toLowerCase();
-        }   
-        return playerSelection;
-    }
-
-    getRoundResult(playerMove, computerMove) {
-        if (playerMove === computerMove) {
-            return "tie";
-        }
-        if ((playerMove === "rock" && computerMove === "scissors") ||
-            (playerMove === "paper" && computerMove === "rock") ||
-            (playerMove === "scissors" && computerMove === "paper")) {
-            return "player";
-        }
-        return "computer";
     }
 
     updateScore(roundResult) {
@@ -59,20 +30,6 @@ class Game {
             this.scores.player++;
         } else if (roundResult === "computer") {
             this.scores.computer++;
-        }
-    }
-
-    declareRoundWinner({ playerMove, computerMove, roundResult }) {
-        switch (roundResult) {
-            case "tie":
-                console.log("It's a tie!");
-                break;
-            case "player":
-                console.log(`You win! ${capitalize(playerMove)} beats ${computerMove}.`);
-                break;
-            case "computer":
-                console.log(`You lose! ${capitalize(computerMove)} beats ${playerMove}.`);
-                break;
         }
     }
 
@@ -88,6 +45,61 @@ class Game {
             console.log("The computer wins!");
         }
     }   
+}
+
+class Round {
+    constructor() {
+        this.MOVES = ["rock", "paper", "scissors", "gun"];
+        this.COMPUTER_MOVES = ["rock", "paper", "scissors"];
+        this.computerMove = this.getComputerMove();
+        this.playerMove = this.getPlayerMove();
+    }
+
+    get result() {
+        return this.getResult();
+    }
+
+    getComputerMove() {
+        return randomElement(this.COMPUTER_MOVES);
+    }
+    
+    getPlayerMove() {
+        // Prompt user for move
+        let playerSelection = prompt("What's your move?").toLowerCase();
+        // Restrict user to valid moves
+        while (!this.MOVES.includes(playerSelection)) {
+            playerSelection = prompt("Your move must be rock, paper, or scissors").toLowerCase();
+        }   
+        return playerSelection;
+    }
+
+    getResult() {
+        if (this.playerMove === this.computerMove) {
+            return "tie";
+        }
+        if ((this.playerMove === "gun") ||
+            (this.playerMove === "rock" && this.computerMove === "scissors") ||
+            (this.playerMove === "paper" && this.computerMove === "rock") ||
+            (this.playerMove === "scissors" && this.computerMove === "paper")) {
+            return "player";
+        }
+        return "computer";
+    }
+
+    declareWinner() {
+        switch (this.result) {
+            case "tie":
+                console.log("It's a tie!");
+                break;
+            case "player":
+                console.log(`You win! ${capitalize(this.playerMove)} beats ${this.computerMove}.`);
+                break;
+            case "computer":
+                console.log(`You lose! ${capitalize(this.computerMove)} beats ${this.playerMove}.`);
+                break;
+        }
+    }
+
 }
 
 // Helpers
