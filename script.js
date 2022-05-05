@@ -132,3 +132,11 @@ function playGame() {
   let newGame = new Game();
   newGame.play();
 }
+dfasdf;
+// DOM Manipulation
+let playerChoices = document.querySelectorAll(".playerChoice");
+playerChoices.forEach((item) => {
+  item.addEventListener("click", () => {
+    console.log(item.textContent);
+  });
+});
