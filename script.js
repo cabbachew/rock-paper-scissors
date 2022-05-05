@@ -61,7 +61,7 @@ class Round {
     this.MOVES = ["rock", "paper", "scissors", "gun"];
     this.COMPUTER_MOVES = ["rock", "paper", "scissors"];
     this.computerMove = this.getComputerMove();
-    this.playerMove = this.getPlayerMove();
+    // this.playerMove = this.getPlayerMove();
   }
 
   get result() {
@@ -132,11 +132,19 @@ function playGame() {
   let newGame = new Game();
   newGame.play();
 }
-dfasdf;
+
 // DOM Manipulation
-let playerChoices = document.querySelectorAll(".playerChoice");
-playerChoices.forEach((item) => {
+const playerOptions = document.querySelectorAll(".playerOption");
+const playerChoice = document.querySelector("#playerChoice");
+const computerChoice = document.querySelector("#computerChoice");
+const roundResult = document.querySelector("#roundResult");
+
+playerOptions.forEach((item) => {
   item.addEventListener("click", () => {
-    console.log(item.textContent);
+    playerChoice.textContent = item.textContent;
+    const round = new Round();
+    round.playerMove = item.textContent.toLowerCase();
+    computerChoice.textContent = capitalize(round.computerMove);
+    roundResult.textContent = capitalize(round.getResult());
   });
 });
