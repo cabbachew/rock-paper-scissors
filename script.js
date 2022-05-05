@@ -102,18 +102,15 @@ class Round {
   declareWinner() {
     switch (this.result) {
       case "tie":
-        console.log("It's a tie!");
-        break;
+        return "It's a tie!";
       case "player":
-        console.log(
-          `You win! ${capitalize(this.playerMove)} beats ${this.computerMove}.`
-        );
-        break;
+        return `You win! ${capitalize(this.playerMove)} beats ${
+          this.computerMove
+        }.`;
       case "computer":
-        console.log(
-          `You lose! ${capitalize(this.computerMove)} beats ${this.playerMove}.`
-        );
-        break;
+        return `You lose! ${capitalize(this.computerMove)} beats ${
+          this.playerMove
+        }.`;
     }
   }
 }
@@ -138,6 +135,10 @@ const playerOptions = document.querySelectorAll(".playerOption");
 const playerChoice = document.querySelector("#playerChoice");
 const computerChoice = document.querySelector("#computerChoice");
 const roundResult = document.querySelector("#roundResult");
+const playerScore = document.querySelector("#playerScore");
+const computerScore = document.querySelector("#computerScore");
+
+let game = new Game();
 
 playerOptions.forEach((item) => {
   item.addEventListener("click", () => {
@@ -145,6 +146,17 @@ playerOptions.forEach((item) => {
     const round = new Round();
     round.playerMove = item.textContent.toLowerCase();
     computerChoice.textContent = capitalize(round.computerMove);
-    roundResult.textContent = capitalize(round.getResult());
+    game.updateScore(round.getResult());
+    roundResult.textContent = round.declareWinner();
+    playerScore.textContent = game.scores.player;
+    computerScore.textContent = game.scores.computer;
   });
+});
+
+const resetGame = document.querySelector("#resetGame");
+
+resetGame.addEventListener("click", () => {
+  game = new Game();
+  playerScore.textContent = game.scores.player;
+  computerScore.textContent = game.scores.computer;
 });
