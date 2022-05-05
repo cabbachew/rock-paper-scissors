@@ -137,19 +137,20 @@ const computerChoice = document.querySelector("#computerChoice");
 const roundResult = document.querySelector("#roundResult");
 const playerScore = document.querySelector("#playerScore");
 const computerScore = document.querySelector("#computerScore");
+const roundDisplay = document.querySelector(".roundDisplay");
 
 let game = new Game();
 
 playerOptions.forEach((item) => {
   item.addEventListener("click", () => {
+    roundDisplay.classList.remove("isHidden");
     playerChoice.textContent = item.textContent;
     const round = new Round();
     round.playerMove = item.textContent.toLowerCase();
     computerChoice.textContent = capitalize(round.computerMove);
     game.updateScore(round.getResult());
     roundResult.textContent = round.declareWinner();
-    playerScore.textContent = game.scores.player;
-    computerScore.textContent = game.scores.computer;
+    displayScores(game);
   });
 });
 
@@ -157,6 +158,19 @@ const resetGame = document.querySelector("#resetGame");
 
 resetGame.addEventListener("click", () => {
   game = new Game();
+  resetRoundDisplay();
+  displayScores(game);
+});
+
+// DOM Helpers
+function displayScores(game) {
   playerScore.textContent = game.scores.player;
   computerScore.textContent = game.scores.computer;
-});
+}
+
+function resetRoundDisplay() {
+  roundDisplay.classList.add("isHidden");
+  playerChoice.textContent = "";
+  computerChoice.textContent = "";
+  roundResult.textContent = "";
+}
