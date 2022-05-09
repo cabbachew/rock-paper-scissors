@@ -136,7 +136,7 @@ function displayScores(game) {
   scoreStatus.textContent = game.gameNotOver() ? "Current" : "Final";
 
   if (!game.gameNotOver()) {
-    playerMoves;
+    playerMoves.forEach((item) => (item.disabled = true));
     if (game.scores.player > game.scores.computer) {
       swal({
         text: "You win the game!",
