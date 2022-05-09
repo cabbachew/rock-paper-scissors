@@ -8,7 +8,7 @@ class Game {
   }
 
   get winningScore() {
-    return Math.ceil(this.bestOf / 2);
+    return Math.floor(this.bestOf / 2) + 1;
   }
 
   play() {
