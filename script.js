@@ -11,13 +11,6 @@ class Game {
     return Math.floor(this.bestOf / 2) + 1;
   }
 
-  play() {
-    while (this.gameNotOver()) {
-      this.runRound();
-    }
-    this.declareGameWinner();
-  }
-
   gameNotOver() {
     return (
       this.scores.player < this.winningScore &&
@@ -25,33 +18,11 @@ class Game {
     );
   }
 
-  runRound() {
-    const round = new Round();
-    this.updateScore(round.result);
-    round.declareWinner();
-    this.declareScore();
-  }
-
   updateScore(roundResult) {
     if (roundResult === "player") {
       this.scores.player++;
     } else if (roundResult === "computer") {
       this.scores.computer++;
-    }
-  }
-
-  declareScore() {
-    const scoreType = this.gameNotOver() ? "CURRENT" : "FINAL";
-    console.log(
-      `**${scoreType} SCORE** <Player: ${this.scores.player}> <Computer: ${this.scores.computer}>`
-    );
-  }
-
-  declareGameWinner() {
-    if (this.scores.player > this.scores.computer) {
-      console.log("You win the game!");
-    } else {
-      console.log("The computer wins the game!");
     }
   }
 }
@@ -99,7 +70,7 @@ class Round {
     return "computer";
   }
 
-  declareWinner() {
+  declareRoundWinner() {
     switch (this.result) {
       case "tie":
         return "It's a tie!";
@@ -125,23 +96,19 @@ function capitalize(string) {
   return tempString[0].toUpperCase() + tempString.slice(1);
 }
 
-function playGame() {
-  let newGame = new Game();
-  newGame.play();
-}
-
 // DOM Manipulation
-const playerOptions = document.querySelectorAll(".playerOption");
+const playerMoves = document.querySelectorAll(".playerMoves");
+const roundDisplay = document.querySelector(".roundDisplay");
 const playerChoice = document.querySelector("#playerChoice");
 const computerChoice = document.querySelector("#computerChoice");
 const roundResult = document.querySelector("#roundResult");
 const playerScore = document.querySelector("#playerScore");
 const computerScore = document.querySelector("#computerScore");
-const roundDisplay = document.querySelector(".roundDisplay");
+const scoreStatus = document.getElementById("scoreStatus");
 
 let game = new Game();
 
-playerOptions.forEach((item) => {
+playerMoves.forEach((item) => {
   item.addEventListener("click", () => {
     roundDisplay.classList.remove("isHidden");
     playerChoice.textContent = item.textContent;
@@ -149,7 +116,7 @@ playerOptions.forEach((item) => {
     round.playerMove = item.textContent.toLowerCase();
     computerChoice.textContent = capitalize(round.computerMove);
     game.updateScore(round.getResult());
-    roundResult.textContent = round.declareWinner();
+    roundResult.textContent = round.declareRoundWinner();
     displayScores(game);
   });
 });
@@ -166,6 +133,22 @@ resetGame.addEventListener("click", () => {
 function displayScores(game) {
   playerScore.textContent = game.scores.player;
   computerScore.textContent = game.scores.computer;
+  scoreStatus.textContent = game.gameNotOver() ? "Current" : "Final";
+
+  if (!game.gameNotOver()) {
+    playerMoves;
+    if (game.scores.player > game.scores.computer) {
+      swal({
+        text: "You win the game!",
+        button: "Hurray!",
+      });
+    } else {
+      swal({
+        text: "The computer wins the game!",
+        button: "Damn it!",
+      });
+    }
+  }
 }
 
 function resetRoundDisplay() {

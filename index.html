@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project: Rock Paper Scissors</title>
     <script src="./script.js" defer></script>
+    <script
+      src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"
+      defer
+    ></script>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div>
       Select a move:
-      <button type="button" class="playerOption">Rock</button>
-      <button type="button" class="playerOption">Paper</button>
-      <button type="button" class="playerOption">Scissors</button>
+      <button type="button" class="playerMoves">Rock</button>
+      <button type="button" class="playerMoves">Paper</button>
+      <button type="button" class="playerMoves">Scissors</button>
     </div>
     <div class="roundDisplay isHidden">
       <p>You chose: <span id="playerChoice"></span></p>
@@ -21,14 +25,12 @@
       <p>Round result: <span id="roundResult"></span></p>
     </div>
     <div>
+      <p><span id="scoreStatus">Current</span> score:</p>
       <p>Player: <span id="playerScore">0</span></p>
       <p>Computer: <span id="computerScore">0</span></p>
     </div>
     <div>
       <button type="button" id="resetGame">Reset</button>
-    </div>
-    <div>
-      <p>Console: <span id="console"></span></p>
     </div>
   </body>
 </html>
