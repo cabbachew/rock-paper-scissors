@@ -127,6 +127,8 @@ resetGame.addEventListener("click", () => {
   game = new Game();
   resetRoundDisplay();
   displayScores(game);
+  // Enable buttons
+  playerMoves.forEach((item) => (item.disabled = false));
 });
 
 // DOM Helpers
