@@ -1,3 +1,9 @@
+const input = document.querySelector("input");
+input.addEventListener("input", updateBestOf);
+function updateBestOf(e) {
+  game.bestOf = e.target.value;
+}
+
 class Game {
   constructor(bestOf = 5) {
     this.scores = {
@@ -129,6 +135,7 @@ resetGame.addEventListener("click", () => {
   displayScores(game);
   // Enable buttons
   playerMoves.forEach((item) => (item.disabled = false));
+  input.value = 5; // Reset to BO5
 });
 
 // DOM Helpers
