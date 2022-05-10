@@ -140,6 +140,10 @@ function validateBestOf() {
     playerMoves.forEach((item) => (item.disabled = true));
     swal({
       text: "Must be a number between 1-99",
+      button: "OK",
+      closeOnClickOutside: false,
+    }).then((value) => {
+      resetGame();
     });
   } else {
     playerMoves.forEach((item) => (item.disabled = false));
