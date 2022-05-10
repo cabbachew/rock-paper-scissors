@@ -32,18 +32,15 @@
     <div>
       <p>
         Best of
-        <input
-          type="number"
-          id="'bestOf"
-          name="bestOf"
-          value="5"
-          min="1"
-          max="100"
-          step="2"
-        />
+        <input type="number" id="bestOf" value="5" min="1" max="100" step="2" />
         rounds (1-99)
       </p>
       <button type="button" id="reset">Reset</button>
+      <p>
+        <label for="typedMove">[Optional] Type your move:</label>
+        <input type="text" id="typedMove" size="8" />
+        <input type="submit" id="submitMove" value="Play" />
+      </p>
     </div>
   </body>
 </html>

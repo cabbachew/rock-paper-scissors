@@ -108,10 +108,39 @@ const scoreStatus = document.getElementById("scoreStatus");
 
 let game = new Game();
 
-const input = document.querySelector("input");
-input.addEventListener("input", updateBestOf);
+// Take user input for winning condition
+const bestOf = document.getElementById("bestOf");
+bestOf.addEventListener("input", updateBestOf);
 function updateBestOf(e) {
   game.bestOf = e.target.value;
+}
+
+// Take user input for move
+let typedMove = document.getElementById("typedMove");
+let submitMove = document.getElementById("submitMove");
+submitMove.addEventListener("click", playMove);
+function playMove() {
+  const round = new Round();
+  if (!round.MOVES.includes(typedMove.value.toLowerCase())) {
+    swal({
+      text: "You must play a valid move",
+      buttons: { reset: { text: "Try Again" }, cancel: "Close" },
+      closeOnClickOutside: false,
+    }).then((value) => {
+      if (value == "reset") {
+        typedMove.focus();
+      }
+    });
+  } else {
+    roundDisplay.classList.remove("isHidden");
+    round.playerMove = typedMove.value.toLowerCase();
+    playerChoice.textContent = capitalize(typedMove.value);
+    computerChoice.textContent = capitalize(round.computerMove);
+    game.updateScore(round.getResult());
+    roundResult.textContent = round.declareRoundWinner();
+    displayScores(game);
+    bestOf.disabled = true;
+  }
 }
 
 playerMoves.forEach((item) => {
@@ -124,7 +153,7 @@ playerMoves.forEach((item) => {
     game.updateScore(round.getResult());
     roundResult.textContent = round.declareRoundWinner();
     displayScores(game);
-    input.disabled = true;
+    bestOf.disabled = true;
   });
 });
 
@@ -138,8 +167,9 @@ function resetGame() {
   displayScores(game);
   // Enable buttons
   playerMoves.forEach((item) => (item.disabled = false));
-  input.value = 5; // Reset to BO5
-  input.disabled = false;
+  bestOf.value = 5; // Reset to BO5
+  bestOf.disabled = false;
+  submitMove.disabled = false;
 }
 
 // DOM Helpers
@@ -150,6 +180,7 @@ function displayScores(game) {
 
   if (!game.gameNotOver()) {
     playerMoves.forEach((item) => (item.disabled = true));
+    submitMove.disabled = true;
     if (game.scores.player > game.scores.computer) {
       swal({
         title: "Congratulations!",
