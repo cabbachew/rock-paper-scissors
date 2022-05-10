@@ -1,9 +1,3 @@
-const input = document.querySelector("input");
-input.addEventListener("input", updateBestOf);
-function updateBestOf(e) {
-  game.bestOf = e.target.value;
-}
-
 class Game {
   constructor(bestOf = 5) {
     this.scores = {
@@ -114,6 +108,12 @@ const scoreStatus = document.getElementById("scoreStatus");
 
 let game = new Game();
 
+const input = document.querySelector("input");
+input.addEventListener("input", updateBestOf);
+function updateBestOf(e) {
+  game.bestOf = e.target.value;
+}
+
 playerMoves.forEach((item) => {
   item.addEventListener("click", () => {
     roundDisplay.classList.remove("isHidden");
@@ -124,6 +124,7 @@ playerMoves.forEach((item) => {
     game.updateScore(round.getResult());
     roundResult.textContent = round.declareRoundWinner();
     displayScores(game);
+    input.disabled = true;
   });
 });
 
@@ -136,6 +137,7 @@ resetGame.addEventListener("click", () => {
   // Enable buttons
   playerMoves.forEach((item) => (item.disabled = false));
   input.value = 5; // Reset to BO5
+  input.disabled = false;
 });
 
 // DOM Helpers
