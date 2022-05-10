@@ -211,7 +211,6 @@ function resetGame() {
   displayScores(game);
   // Enable buttons
   playerMoves.forEach((item) => (item.disabled = false));
-  bestOf.value = 5; // Reset to BO5
   bestOf.disabled = false;
   submitMove.disabled = false;
   typedMove.value = "";
