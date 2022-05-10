@@ -116,8 +116,8 @@ function updateBestOf(e) {
 }
 
 // Take user input for move
-let typedMove = document.getElementById("typedMove");
-let submitMove = document.getElementById("submitMove");
+const typedMove = document.getElementById("typedMove");
+const submitMove = document.getElementById("submitMove");
 submitMove.addEventListener("click", playMove);
 function playMove() {
   const round = new Round();
@@ -143,6 +143,7 @@ function playMove() {
   }
 }
 
+// Each button plays a round
 playerMoves.forEach((item) => {
   item.addEventListener("click", () => {
     roundDisplay.classList.remove("isHidden");
@@ -170,6 +171,7 @@ function resetGame() {
   bestOf.value = 5; // Reset to BO5
   bestOf.disabled = false;
   submitMove.disabled = false;
+  typedMove.value = "";
 }
 
 // DOM Helpers
