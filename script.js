@@ -75,11 +75,11 @@ class Round {
       case "tie":
         return "It's a tie!";
       case "player":
-        return `You win! ${capitalize(this.playerMove)} beats ${
+        return `You win. ${capitalize(this.playerMove)} beats ${
           this.computerMove
         }.`;
       case "computer":
-        return `You lose! ${capitalize(this.computerMove)} beats ${
+        return `You lose. ${capitalize(this.computerMove)} beats ${
           this.playerMove
         }.`;
     }
@@ -204,6 +204,7 @@ function resetGame() {
   bestOf.disabled = false;
   submitMove.disabled = false;
   typedMove.value = "";
+  typedMove.disabled = false;
 }
 
 // DOM Helpers
@@ -215,6 +216,7 @@ function displayScores(game) {
   if (!game.gameNotOver()) {
     playerMoves.forEach((item) => (item.disabled = true));
     submitMove.disabled = true;
+    typedMove.disabled = true;
     if (game.scores.player > game.scores.computer) {
       swal({
         title: "Congratulations!",
