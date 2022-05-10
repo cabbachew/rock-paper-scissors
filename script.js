@@ -114,6 +114,29 @@ bestOf.addEventListener("input", updateBestOf);
 function updateBestOf(e) {
   game.bestOf = e.target.value;
 }
+bestOf.addEventListener("focusout", validateBestOf);
+function validateBestOf() {
+  if (bestOf.value < 1 || bestOf.value > 99) {
+    bestOf.value = 5;
+    playerMoves.forEach((item) => (item.disabled = true));
+  } else {
+    playerMoves.forEach((item) => (item.disabled = false));
+  }
+}
+bestOf.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    validateBestOf();
+  }
+});
+
+function validateBestOf() {
+  if (bestOf.value < 1 || bestOf.value > 99) {
+    bestOf.value = 5;
+    playerMoves.forEach((item) => (item.disabled = true));
+  } else {
+    playerMoves.forEach((item) => (item.disabled = false));
+  }
+}
 
 // Take user input for move
 const typedMove = document.getElementById("typedMove");
@@ -166,6 +189,7 @@ playerMoves.forEach((item) => {
   });
 });
 
+// Resetting game
 const reset = document.querySelector("#reset");
 
 reset.addEventListener("click", resetGame);
