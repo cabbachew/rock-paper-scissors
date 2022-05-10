@@ -118,6 +118,14 @@ function updateBestOf(e) {
 // Take user input for move
 const typedMove = document.getElementById("typedMove");
 const submitMove = document.getElementById("submitMove");
+
+typedMove.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    playMove();
+  }
+});
+
+// When Play button is clicked
 submitMove.addEventListener("click", playMove);
 function playMove() {
   const round = new Round();
