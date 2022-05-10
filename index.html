@@ -18,6 +18,16 @@
   </head>
   <body>
     <div>
+      <h3>Options:</h3>
+      <p>
+        <label for="typedName">Your name = </label
+        ><input
+          type="text"
+          id="typedName"
+          placeholder="Player"
+          autocomplete="off"
+        />
+      </p>
       <p>
         Best of
         <input type="number" id="bestOf" value="5" min="1" max="100" step="2" />
@@ -25,9 +35,8 @@
       </p>
       <br />
     </div>
-
     <div>
-      Select a move:
+      <h3>Select a move:</h3>
       <button type="button" class="playerMoves">Rock</button>
       <button type="button" class="playerMoves">Paper</button>
       <button type="button" class="playerMoves">Scissors</button>
@@ -53,8 +62,8 @@
     <div>
       <h3><span id="scoreStatus">Current</span> score:</h3>
       <p>
-        <span id="playerScore">0</span> [Player] —
-        <span id="computerScore">0</span> [Computer]
+        <span id="playerScore">0</span> [<span class="playerName">Player</span>]
+        — <span id="computerScore">0</span> [Computer]
       </p>
       <br />
     </div>

@@ -43,17 +43,17 @@ class Round {
     return randomElement(this.COMPUTER_MOVES);
   }
 
-  getPlayerMove() {
-    // Prompt user for move
-    let playerSelection = prompt("What's your move?").toLowerCase();
-    // Restrict user to valid moves
-    while (!this.MOVES.includes(playerSelection)) {
-      playerSelection = prompt(
-        "Your move must be rock, paper, or scissors"
-      ).toLowerCase();
-    }
-    return playerSelection;
-  }
+  // getPlayerMove() {
+  //   // Prompt user for move
+  //   let playerSelection = prompt("What's your move?").toLowerCase();
+  //   // Restrict user to valid moves
+  //   while (!this.MOVES.includes(playerSelection)) {
+  //     playerSelection = prompt(
+  //       "Your move must be rock, paper, or scissors"
+  //     ).toLowerCase();
+  //   }
+  //   return playerSelection;
+  // }
 
   getResult() {
     if (this.playerMove === this.computerMove) {
@@ -108,21 +108,26 @@ const scoreStatus = document.getElementById("scoreStatus");
 
 let game = new Game();
 
+// Let user choose player name
+const typedName = document.querySelector("#typedName");
+const playerName = document.querySelector(".playerName");
+
+typedName.addEventListener("input", (e) => {
+  if (e.target.value == "") {
+    playerName.textContent = "Player";
+  } else {
+    playerName.textContent = e.target.value;
+  }
+});
+
 // Take user input for winning condition
 const bestOf = document.getElementById("bestOf");
 bestOf.addEventListener("input", updateBestOf);
 function updateBestOf(e) {
   game.bestOf = e.target.value;
 }
+
 bestOf.addEventListener("focusout", validateBestOf);
-function validateBestOf() {
-  if (bestOf.value < 1 || bestOf.value > 99) {
-    bestOf.value = 5;
-    playerMoves.forEach((item) => (item.disabled = true));
-  } else {
-    playerMoves.forEach((item) => (item.disabled = false));
-  }
-}
 bestOf.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     validateBestOf();
@@ -133,6 +138,9 @@ function validateBestOf() {
   if (bestOf.value < 1 || bestOf.value > 99) {
     bestOf.value = 5;
     playerMoves.forEach((item) => (item.disabled = true));
+    swal({
+      text: "Must be a number between 1-99",
+    });
   } else {
     playerMoves.forEach((item) => (item.disabled = false));
   }
@@ -148,19 +156,18 @@ typedMove.addEventListener("keypress", function (e) {
   }
 });
 
-// When Play button is clicked
+// When Go button is clicked
 submitMove.addEventListener("click", playMove);
 function playMove() {
   const round = new Round();
   if (!round.MOVES.includes(typedMove.value.toLowerCase())) {
     swal({
       text: "You must play a valid move",
-      buttons: { reset: { text: "Try Again" }, cancel: "Close" },
+      button: "Try Again",
       closeOnClickOutside: false,
     }).then((value) => {
-      if (value == "reset") {
-        typedMove.focus();
-      }
+      typedMove.value = "";
+      typedMove.focus();
     });
   } else {
     roundDisplay.classList.remove("isHidden");
@@ -174,7 +181,7 @@ function playMove() {
   }
 }
 
-// Each button plays a round
+// Play a round by clicking a move button
 playerMoves.forEach((item) => {
   item.addEventListener("click", () => {
     roundDisplay.classList.remove("isHidden");
