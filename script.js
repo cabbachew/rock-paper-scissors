@@ -128,9 +128,11 @@ playerMoves.forEach((item) => {
   });
 });
 
-const resetGame = document.querySelector("#resetGame");
+const reset = document.querySelector("#reset");
 
-resetGame.addEventListener("click", () => {
+reset.addEventListener("click", resetGame);
+
+function resetGame() {
   game = new Game();
   resetRoundDisplay();
   displayScores(game);
@@ -138,7 +140,7 @@ resetGame.addEventListener("click", () => {
   playerMoves.forEach((item) => (item.disabled = false));
   input.value = 5; // Reset to BO5
   input.disabled = false;
-});
+}
 
 // DOM Helpers
 function displayScores(game) {
@@ -150,13 +152,31 @@ function displayScores(game) {
     playerMoves.forEach((item) => (item.disabled = true));
     if (game.scores.player > game.scores.computer) {
       swal({
-        text: "You win the game!",
-        button: "Hurray!",
+        title: "Congratulations!",
+        text: "You win the game.",
+        buttons: {
+          reset: { text: "Play Again", value: "reset" },
+          cancel: "Close",
+        },
+        closeOnClickOutside: false,
+      }).then((value) => {
+        if (value == "reset") {
+          resetGame();
+        }
       });
     } else {
       swal({
-        text: "The computer wins the game!",
-        button: "Damn it!",
+        title: "Game Over!",
+        text: "The computer wins the game.",
+        buttons: {
+          reset: { text: "Play Again", value: "reset" },
+          cancel: "Close",
+        },
+        closeOnClickOutside: false,
+      }).then((value) => {
+        if (value == "reset") {
+          resetGame();
+        }
       });
     }
   }
