@@ -1,7 +1,11 @@
 .roundDisplay {
-  display: block;
+  transition-delay: 1s;
 }
 
 .isHidden {
   display: none;
+}
+
+body {
+  font-family: Ubuntu, sans-serif;
 }

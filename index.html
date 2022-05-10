@@ -11,41 +11,55 @@
       defer
     ></script>
     <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
   </head>
   <body>
-    <div>
-      Select a move:
-      <button type="button" class="playerMoves">Rock</button>
-      <button type="button" class="playerMoves">Paper</button>
-      <button type="button" class="playerMoves">Scissors</button>
-    </div>
-    <div class="roundDisplay isHidden">
-      <p>You chose: <span id="playerChoice"></span></p>
-      <p>The computer chose: <span id="computerChoice"></span></p>
-      <p>Round result: <span id="roundResult"></span></p>
-    </div>
-    <div>
-      <p><span id="scoreStatus">Current</span> score:</p>
-      <p>Player: <span id="playerScore">0</span></p>
-      <p>Computer: <span id="computerScore">0</span></p>
-    </div>
     <div>
       <p>
         Best of
         <input type="number" id="bestOf" value="5" min="1" max="100" step="2" />
         rounds (Must be a number between 1-99)
       </p>
-      <button type="button" id="reset">Reset</button>
+      <br />
+    </div>
+
+    <div>
+      Select a move:
+      <button type="button" class="playerMoves">Rock</button>
+      <button type="button" class="playerMoves">Paper</button>
+      <button type="button" class="playerMoves">Scissors</button>
       <p>
-        <label for="typedMove">[Optional] </label>
+        <label for="typedMove">or </label>
         <input
           type="text"
           id="typedMove"
           placeholder="Type your move"
           autocomplete="off"
         />
-        <input type="submit" id="submitMove" value="Play" />
+        <input type="submit" id="submitMove" value="Go" />
       </p>
+      <br />
+    </div>
+    <div class="roundDisplay isHidden">
+      <h3>Round result:</h3>
+      <p>You chose <span id="playerChoice"></span>.</p>
+      <p>The computer chose <span id="computerChoice"></span>.</p>
+      <p><span id="roundResult"></span></p>
+      <br />
+    </div>
+    <div>
+      <h3><span id="scoreStatus">Current</span> score:</h3>
+      <p>
+        <span id="playerScore">0</span> [Player] —
+        <span id="computerScore">0</span> [Computer]
+      </p>
+      <br />
+    </div>
+    <div>
+      <button type="button" id="reset">Reset</button>
     </div>
   </body>
 </html>
